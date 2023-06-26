@@ -53,7 +53,7 @@ NTSTATUS Memory::Init()
 PVOID Memory::OverwritePage(ULONG64 physicalAddress)
 {
 	// page boundary checks are done by Read/WriteProcessMemory
-	// and page entries are not be spread over different pages
+	// and page entries are not spread over different pages
 	ULONG pageOffset = physicalAddress % PAGE_SIZE;
 	ULONG64 pageStartPhysical = physicalAddress - pageOffset;
 	MainPageEntry->PageFrame = PAGE_TO_PFN(pageStartPhysical);

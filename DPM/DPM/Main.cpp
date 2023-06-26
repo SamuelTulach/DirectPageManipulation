@@ -3,13 +3,13 @@
 #define OFFSET_ActiveProcessLinks 0x448
 PEPROCESS FindProcess(const wchar_t* executableName, PVOID* mainModuleBaseAddress)
 {
-	PEPROCESS currentProcess =  IoGetCurrentProcess();
+	PEPROCESS currentProcess = IoGetCurrentProcess();
 	PLIST_ENTRY list = reinterpret_cast<PLIST_ENTRY>(reinterpret_cast<PCHAR>(currentProcess) + OFFSET_ActiveProcessLinks);
 
 	for (; list->Flink != reinterpret_cast<PLIST_ENTRY>(reinterpret_cast<PCHAR>(currentProcess) + OFFSET_ActiveProcessLinks); list = list->Flink)
 	{
 		PEPROCESS targetProcess = reinterpret_cast<PEPROCESS>(reinterpret_cast<PCHAR>(list->Flink) - OFFSET_ActiveProcessLinks);
-		PPEB pebAddress =  PsGetProcessPeb(targetProcess);
+		PPEB pebAddress = PsGetProcessPeb(targetProcess);
 		if (!pebAddress)
 			continue;
 
